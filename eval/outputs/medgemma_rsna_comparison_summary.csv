@@ -1,0 +1,7 @@
+métrique,baseline,improved,delta
+Accuracy,0.74,0.8,0.06
+Macro-F1,0.4808,0.5511,0.0703
+JSON valides,1.0,1.0,0.0
+Taux uncertain,0.0,0.08,0.08
+Latence médiane (min),2.77,2.54,-0.23
+Hallucinations,0.0,0.0,0.0

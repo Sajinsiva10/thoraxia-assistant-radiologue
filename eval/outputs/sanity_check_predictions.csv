@@ -1,0 +1,4 @@
+case_id,label,predicted_class,confidence,image_quality,latency_ms,latency_min,json_valid,error
+CXR_SYN_001,normal,uncertain,0.2,good,156711,2.61,True,
+CXR_SYN_002,suspected_opacity,uncertain,0.3,good,147942,2.47,True,
+CXR_SYN_003,uncertain,uncertain,0.2,limited,156150,2.6,True,

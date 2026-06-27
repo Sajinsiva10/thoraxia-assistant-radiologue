@@ -1,0 +1,30 @@
+# Environnement Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Données lourdes (RSNA et MedGemma cache)
+data/rsna_raw/
+data/rsna_uncertain_cases/
+data/_temp_upload.png
+.cache/
+
+# Secrets — NE JAMAIS COMMIT
+.env
+kaggle.json
+*.token
+
+# IDE
+.vscode/
+.idea/
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
