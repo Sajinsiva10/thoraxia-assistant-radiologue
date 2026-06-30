@@ -4,7 +4,7 @@ venv/
 __pycache__/
 *.pyc
 
-# Données lourdes (RSNA et MedGemma cache)
+# Données lourdes (sauf rsna_png qu'on garde)
 data/rsna_raw/
 data/rsna_uncertain_cases/
 data/_temp_upload.png
@@ -28,3 +28,20 @@ Thumbs.db
 
 # Logs
 *.log
+
+
+
+
+# Airflow runtime
+eval/outputs/
+medical_ai_evidence.sqlite
+eval/medical_ai_evidence.sqlite
+
+# Airflow runtime
+airflow/logs/
+airflow/.env
+airflow/plugins/
+airflow/config/
+
+# Dataset RSNA complet
+data/rsna_full/

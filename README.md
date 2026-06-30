@@ -116,3 +116,68 @@ Les pistes avancées doivent rester expérimentales, traçables et justifiées. 
 Le code pédagogique du dépôt est publié sous licence MIT. **Les datasets externes, modèles et bibliothèques utilisés conservent leurs licences propres** : les étudiants doivent vérifier et documenter les droits d'usage avant toute expérimentation.
 
 Exigence minimale : indiquer dans le rapport la source, la version, la licence ou les conditions d'accès, les restrictions de redistribution, les traitements d'anonymisation et les limites d'interprétation. Aucun fichier patient réel, même pseudonymisé, ne doit être ajouté au dépôt sans autorisation explicite et traçable.
+
+## Résultats
+
+Les résultats d'évaluation (CSV/JSON) sont regénérés en exécutant les notebooks 04 et 05.
+Pour les voir directement sans relancer le calcul, consulte les livrables Word
+`Comparison.docx` et `Amelioration.docx`.
+
+
+
+# Airflow — Pipeline d'ingestion RSNA
+
+Pipeline d'orchestration pour télécharger et préparer le dataset RSNA Pneumonia complet (~30 000 cas) depuis Kaggle.
+
+## Architecture du DAG
+
+`thoraxia_kaggle_pipeline.py` enchaîne 4 tâches séquentielles :
+
+1. **kaggle_download** — télécharge le ZIP RSNA depuis Kaggle (~3,5 Go)
+2. **unzip_dataset** — décompresse le ZIP
+3. **convert_to_png** — convertit les DICOM en PNG 512×512
+4. **build_catalog** — génère le CSV récapitulatif (case_id, patientId, label)
+
+## Prérequis
+
+- Docker Desktop installé et lancé
+- Compte Kaggle avec `kaggle.json` dans `C:\Users\{user}\.kaggle\`
+- ~10 Go d'espace disque libre
+
+## Installation
+
+```powershell
+# Depuis le dossier airflow/
+docker compose build
+docker compose up airflow-init
+docker compose up -d
+```
+
+## Accès
+
+UI Airflow : http://localhost:8090 (login : `airflow` / `airflow`)
+
+## Lancer le pipeline
+
+1. Va sur http://localhost:8090
+2. Active le DAG `thoraxia_kaggle_pipeline` (toggle bleu)
+3. Trigger manuellement (bouton ▶️)
+4. Suivi via l'onglet **Grid** ou **Graph**
+
+Durée estimée : ~1h30 (téléchargement + conversion).
+
+## Sortie
+
+Les données sont stockées dans :
+- `data/rsna_full/raw/` — ZIP Kaggle
+- `data/rsna_full/stage_2_train_images/` — DICOM extraits
+- `data/rsna_full/png/` — PNG 512×512 convertis
+- `data/rsna_full/rsna_full_catalog.csv` — catalogue indexé
+
+⚠️ Le dossier `data/rsna_full/` est dans `.gitignore` (volume trop lourd pour Git).
+
+## Arrêter
+
+```powershell
+docker compose down
+```
